@@ -11,18 +11,13 @@
     ps.scipy
     ps.matplotlib
     ps.ptpython
-    ps.pyvista
+    # ps.pyvista
   ]);
 
   calc = pkgs.writeShellScriptBin "calc" ''
     ${pyshell}/bin/ipython3
   '';
 in {
-  services = {
-    gnome-keyring = {
-      enable = true;
-    };
-  };
   stylix.targets = {
     zellij.enable = false;
   };
@@ -71,14 +66,14 @@ in {
       addKeysToAgent = "yes";
       enable = true;
       matchBlocks."*".identityFile = [
-        "/home/${username}/.ssh/${username}"
+        # "/home/${username}/.ssh/${username}"
       ];
     };
     # basic configuration of git, please change to your own
     git = {
       # enable = true;
       userName = "${username}";
-      userEmail = "glenn.windbosondell@swegon.com";
+      userEmail = "${username}@ea.se";
     };
     fish = {
       enable = true;
@@ -161,10 +156,6 @@ in {
           impure_msg = "";
           format = "via [$symbol$state($name)]($style) ";
         };
-
-        # aws.disabled = true;
-        # gcloud.disabled = true;
-        # line_break.disabled = true;
       };
     };
   };

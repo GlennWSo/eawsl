@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     fps = {
       url = "github:wamserma/flake-programs-sqlite";
     };
@@ -36,7 +36,7 @@
     nixosConfigurations = let
       username = "ea";
       system = "x86_64-linux";
-      pkgs = import nixpkgs {inherit system;};
+      # pkgs = import nixpkgs {inherit system;};
     in {
       "wsl" = nixpkgs.lib.nixosSystem {
         inherit system;
@@ -48,14 +48,15 @@
           (import ./user.nix {inherit username;})
           ./themes/nightfox.nix
           ./configuration.nix
-          # {
-          #   home-manager = {
-          #     useGlobalPkgs = true;
-          #     useUserPackages = true;
-          #     backupFileExtension = "back";
-          #     users.${username} = import ./home/ea/headless.nix {inherit username pkgs;};
-          #   };
-          # }
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              backupFileExtension = "back";
+              extraSpecialArgs = {inherit username;};
+              users.${username} = ./home/ea/headless.nix;
+            };
+          }
           ({pkgs, ...}: {
             wsl.enable = true;
             wsl.defaultUser = username;
