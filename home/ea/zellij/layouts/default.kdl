@@ -1,0 +1,51 @@
+layout {
+    tab name="edit" focus=true {
+        pane size=1 borderless=true {
+            plugin location="zellij:compact-bar"
+        }
+        pane command="hx" borderless=true{
+            args "."
+        }
+        // pane edit="." borderless=true
+        pane size="35%" stacked=true {
+            pane 
+            pane
+        }
+    }
+    tab name="gitui"  {
+        pane size=1 borderless=true {
+            plugin location="zellij:compact-bar"
+        }
+        pane command="gitui" borderless=true{
+        }
+        pane size="30%" 
+        
+    }
+    tab name="htop"  {
+        pane size=1 borderless=true {
+            plugin location="zellij:compact-bar"
+        }
+        pane command="htop" borderless=true{
+        }
+        pane size="30%" 
+        
+    }
+    tab name="ranger"  {
+        pane size=1 borderless=true {
+            plugin location="zellij:compact-bar"
+        }
+        pane command="ranger" borderless=true
+        pane size="30%" 
+        
+    }
+    
+    tab {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        pane
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+}
