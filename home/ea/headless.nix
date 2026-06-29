@@ -75,12 +75,12 @@ in {
   '';
   programs = {
     ssh = {
-      # addKeysToAgent = "yes";
       enable = true;
-      # settings."*" = {
-      #   IdentityFile = "~/.ssh/eakey";
-      #   AddKeysToAgent = "yes";
-      # };
+      # enableDefaultConfig = false;
+      settings."*" = {
+        IdentityFile = "~/.ssh/eakey";
+        AddKeysToAgent = "yes";
+      };
       #
     };
     # basic configuration of git, please change to your own
@@ -94,7 +94,7 @@ in {
       shellInit = ''
         export fish_greeting=""
         export SHELL=fish
-        ssh-add ~/.ssh/eakey
+        # ssh-add ~/.ssh/eakey
       '';
       shellAbbrs = {
         ls = "exa";

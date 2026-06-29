@@ -55,7 +55,7 @@
           home-manager.nixosModules.home-manager
           stylix.nixosModules.stylix
           ./core.nix
-          (import ./user.nix {inherit username;})
+          (import ./user.nix {inherit username pkgs;})
           ./themes/nightfox.nix
           ./configuration.nix
           {

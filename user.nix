@@ -1,4 +1,8 @@
-{username ? "ea", ...}: {
+{
+  pkgs,
+  username ? "ea",
+  ...
+}: {
   users.users = {
     ${username} = {
       isNormalUser = true;
@@ -6,6 +10,7 @@
       extraGroups = ["networkmanager" "wheel" "docker" "libvirtd" "kvm"];
       # generate hash with mkpasswd: `echo `
       hashedPassword = "$y$j9T$ExBYiJQRORac0MHgPi1y5/$mKKbeYhGa80tsZmHSA0V0hE7KmxvYGfwsh3vndUi0e5";
+      shell = pkgs.fish;
     };
   };
 
