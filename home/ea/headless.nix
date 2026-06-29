@@ -136,7 +136,7 @@ in {
     };
 
     direnv = {
-      # enable = true;
+      enable = true;
       enableFishIntegration = true;
       nix-direnv.enable = true;
     };
