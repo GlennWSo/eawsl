@@ -1,6 +1,7 @@
 {
   pkgs,
   username ? "ea",
+  lib,
   ...
 }: let
   pyshell = pkgs.python312.withPackages (ps: [
@@ -61,13 +62,26 @@ in {
     # changes in each release.
     stateVersion = "25.05";
   };
+  home.activation.generateSshKey = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    KEY_PATH="$HOME/.ssh/eakey"
+    if [ ! -f "$KEY_PATH" ]; then
+      echo "Generating missing SSH key..."
+      ${pkgs.openssh}/bin/ssh-keygen -t ed25519 -f "$KEY_PATH" -C "your_email@example.com" -N ""
+      chmod 600 "$KEY_PATH"
+      chmod 644 "$KEY_PATH.pub"
+    else
+      echo "SSH key already exists, skipping generation."
+    fi
+  '';
   programs = {
     ssh = {
-      addKeysToAgent = "yes";
+      # addKeysToAgent = "yes";
       enable = true;
-      matchBlocks."*".identityFile = [
-        # "/home/${username}/.ssh/${username}"
-      ];
+      # settings."*" = {
+      #   IdentityFile = "~/.ssh/eakey";
+      #   AddKeysToAgent = "yes";
+      # };
+      #
     };
     # basic configuration of git, please change to your own
     git = {
@@ -80,6 +94,7 @@ in {
       shellInit = ''
         export fish_greeting=""
         export SHELL=fish
+        ssh-add ~/.ssh/eakey
       '';
       shellAbbrs = {
         ls = "exa";
