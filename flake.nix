@@ -8,7 +8,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    stylix.url = "github:nix-community/stylix/release-25.11";
+    stylix.url = "github:nix-community/stylix/";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     tt-schemes = {
       url = "github:tinted-theming/schemes";
@@ -32,12 +33,21 @@
     home-manager,
     stylix,
     ...
-  } @ inputs: {
-    nixosConfigurations = let
-      username = "ea";
-      system = "x86_64-linux";
-      # pkgs = import nixpkgs {inherit system;};
-    in {
+  } @ inputs: let
+    system = "x86_64-linux";
+    pkgs = import nixpkgs {inherit system;};
+    wslExport = pkgs.writeShellScriptBin "wslexport" ''
+      ${wslBuilder}/bin/nixos-wsl-tarball-builder
+    '';
+    wslBuilder = self.nixosConfigurations.wsl.config.system.build.tarballBuilder;
+    username = "ea";
+  in {
+    packages.x86_64-linux = rec {
+      default = wslExport;
+      wsl = wslExport;
+    };
+
+    nixosConfigurations = {
       "wsl" = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
