@@ -137,7 +137,7 @@ in {
 
     direnv = {
       # enable = true;
-      # enableFishIntegration = true;
+      enableFishIntegration = true;
       nix-direnv.enable = true;
     };
     # zellij = {

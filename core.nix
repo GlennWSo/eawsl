@@ -23,7 +23,7 @@
     any-nix-shell
     bat
     btop
-    direnv
+    # direnv
     dufs
     eza
     fish
