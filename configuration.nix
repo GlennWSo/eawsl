@@ -17,4 +17,5 @@
     ];
   };
   system.stateVersion = "25.05";
+  programs.ssh.startAgent = true;
 }
