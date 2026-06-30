@@ -154,6 +154,7 @@ in {
       enable = true;
       enableFishIntegration = true;
       nix-direnv.enable = true;
+      silent = true;
     };
     # zellij = {
     #   enable = false;
