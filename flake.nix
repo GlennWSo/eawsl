@@ -47,8 +47,8 @@
       wsl = wslExport;
     };
 
-    nixosConfigurations = {
-      "wsl" = nixpkgs.lib.nixosSystem {
+    nixosConfigurations = rec {
+      "base" = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           inputs.wsl.nixosModules.default
@@ -67,6 +67,19 @@
               users.${username} = ./home/ea/headless.nix;
             };
           }
+          {
+            hardware.nvidia.open = true;
+            nixpkgs.config.allowUnfree = true;
+          }
+        ];
+      };
+      "installer" = base.extendModules {
+        modules = [
+          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+        ];
+      };
+      "wsl" = base.extendModules {
+        modules = [
           ({pkgs, ...}: {
             wsl.enable = true;
             wsl.defaultUser = username;
