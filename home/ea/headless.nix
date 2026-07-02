@@ -62,17 +62,17 @@ in {
     # changes in each release.
     stateVersion = "25.05";
   };
-  home.activation.generateSshKey = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    KEY_PATH="$HOME/.ssh/eakey"
-    if [ ! -f "$KEY_PATH" ]; then
-      echo "Generating missing SSH key..."
-      ${pkgs.openssh}/bin/ssh-keygen -t ed25519 -f "$KEY_PATH" -C "your_email@example.com" -N ""
-      chmod 600 "$KEY_PATH"
-      chmod 644 "$KEY_PATH.pub"
-    else
-      echo "SSH key already exists, skipping generation."
-    fi
-  '';
+  # home.activation.generateSshKey = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  #   KEY_PATH="$HOME/.ssh/eakey"
+  #   if [ ! -f "$KEY_PATH" ]; then
+  #     echo "Generating missing SSH key..."
+  #     ${pkgs.openssh}/bin/ssh-keygen -t ed25519 -f "$KEY_PATH" -C "your_email@example.com" -N ""
+  #     chmod 600 "$KEY_PATH"
+  #     chmod 644 "$KEY_PATH.pub"
+  #   else
+  #     echo "SSH key already exists, skipping generation."
+  #   fi
+  # '';
   programs = {
     ssh = {
       enable = true;
