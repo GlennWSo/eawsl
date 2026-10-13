@@ -41,6 +41,9 @@
     '';
     wslBuilder = self.nixosConfigurations.wsl.config.system.build.tarballBuilder;
     username = "ea";
+    configureRsyslog = final: prev: {
+      rsyslog = prev.rsyslog.override {};
+    };
   in {
     packages.x86_64-linux = rec {
       default = wslExport;
@@ -58,6 +61,7 @@
           (import ./user.nix {inherit username pkgs;})
           ./themes/nightfox.nix
           ./configuration.nix
+          ./log.nix
           {
             home-manager = {
               useGlobalPkgs = true;
@@ -70,6 +74,8 @@
           {
             hardware.nvidia.open = true;
             nixpkgs.config.allowUnfree = true;
+            nixpkgs.overlays = [
+            ];
           }
         ];
       };
