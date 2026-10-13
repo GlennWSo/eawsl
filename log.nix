@@ -17,4 +17,5 @@
     };
   };
   systemd.services.vector.serviceConfig.LogsDirectory = "vector";
+  networking.firewall.allowedTCPPorts = [6767];
 }
