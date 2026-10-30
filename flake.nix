@@ -62,6 +62,7 @@
           ./themes/nightfox.nix
           ./configuration.nix
           ./log.nix
+          ./dulog.nix
           {
             home-manager = {
               useGlobalPkgs = true;
